@@ -5,26 +5,46 @@ import {
   PointElement,
   LineElement,
   Tooltip,
+  type ChartData,
+  type ChartOptions,
 } from "chart.js";
 
 import { Line } from "react-chartjs-2";
-Chart.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Tooltip,
-);
+Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
 
-const options = {
-    plugins: {
-        legend: {
-            display: false
-        }
-    }
-}
+const options: ChartOptions<"line"> = {
+  responsive: true,
+  maintainAspectRatio: false,
 
-const data = {
+  plugins: {
+    tooltip: {
+      callbacks: {
+        label: (context) => {
+          const value = context.raw as number;
+
+          return `R$ ${value.toLocaleString("pt-br")}`;
+        },
+      },
+    },
+    legend: {
+      display: false,
+    },
+  },
+  scales: {
+    y: {
+      ticks: {
+        callback: (value) => `R$ ${Number(value) / 1000} mil`,
+      },
+    },
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
+const data: ChartData<"line"> = {
   labels: [
     "Jan",
     "Fev",
@@ -41,21 +61,33 @@ const data = {
   ],
   datasets: [
     {
-      labels: "Vendas",
+      label: "Faturamento",
       data: [
         12000, 15000, 13000, 18000, 21000, 19000, 25000, 27000, 24000, 30000,
         32000, 35000,
       ],
       borderWidth: 2,
-      tensio: 0.3,
-      borderColor: '#00bfff',
-      pointBorderColor: '#0080ff',
-      pointBackgroundColor: 'fff'
+      tension: 0.3,
+
+      borderColor: "#00bfff",
+      backgroundColor: "rgba(0, 191, 255, 0.17",
+
+      pointRadius: 4,
+      pointHoverRadius: 6,
+
+      pointBorderColor: "#0080ff",
+      pointBackgroundColor: "fff",
+
+      fill: true,
     },
   ],
 };
 
-const SilesChart = () =>{
-    return <Line data={data} options={options}/>
-}
-export default SilesChart
+const SilesChart = () => {
+  return (
+    <div className="w-full h-full">
+      <Line data={data} options={options} />
+    </div>
+  );
+};
+export default SilesChart;

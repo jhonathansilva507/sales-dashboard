@@ -2,8 +2,9 @@ import {
   Chart,
   ArcElement,
   Tooltip,
-  type ChartOptions,
   Legend,
+  type ChartData,
+  type ChartOptions,
 } from "chart.js";
 
 import { Doughnut } from "react-chartjs-2";
@@ -13,14 +14,21 @@ Chart.register(ArcElement, Tooltip, Legend);
 const options: ChartOptions<"doughnut"> = {
   responsive: true,
   maintainAspectRatio: false,
+
+  radius: "70%",
+
   plugins: {
     legend: {
-      display: false,
+      position: "bottom",
+      labels: {
+        usePointStyle: true,
+        pointStyle: "circle"
+      }
     },
   },
 };
 
-const data = {
+const data: ChartData<"doughnut"> = {
   labels: ["Eletrônicos", "Periféricos", "Acessórios", "Outros"],
   datasets: [
     {
@@ -35,31 +43,10 @@ const data = {
 const ProductsChart = () => {
   return (
     <div className="w-full h-full flex items-center justify-start">
-      <div className="w-1/2 h-full flex items-center justify-center">
+      <div className="w-full h-full flex items-center justify-center">
           <Doughnut data={data} options={options} />
       </div>
 
-      <div className="grid grid-cols-4 gap-x-4 gap-y-3">
-        <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-[#3b82f6]" />
-            <span className="text-sm font-medium text-gray-600">Eletrônicos</span>
-        </div>
-
-        <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-[#22c55e]" />
-            <span className="text-sm font-medium text-gray-600">Eletrônicos</span>
-        </div>
-
-        <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-[#f59e0b]" />
-            <span className="text-sm font-medium text-gray-600">Eletrônicos</span>
-        </div>
-
-        <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-[#ef4444]" />
-            <span className="text-sm font-medium text-gray-600">Eletrônicos</span>
-        </div>
-      </div>
     </div>
   );
 };

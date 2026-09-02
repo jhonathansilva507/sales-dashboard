@@ -68,11 +68,11 @@ const chartConfig = {
     color: "#0c4a6e",
   },
   aspiradoresApoio: {
-    label: "Aspiradores Robô",
+    label: "Aspiradores",
     color: "#0c4a6e",
   },
   cafeteiras: {
-    label: "Cafeteiras Expressas",
+    label: "Cafeteiras",
     color: "#030712",
   },
 } satisfies ChartConfig;
@@ -85,7 +85,7 @@ export function ChartBarMixed() {
         <CardDescription>Produtos com mais vendas no ano</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="min-h-full h-[300px]">
+        <ChartContainer config={chartConfig} className="full-full h-60 md:h-75">
           <BarChart
             accessibilityLayer
             data={chartData}
@@ -99,9 +99,9 @@ export function ChartBarMixed() {
               dataKey="product"
               type="category"
               tickLine={false}
-              tickMargin={10}
+              tickMargin={0}
               axisLine={false}
-              width={120}
+              width={90}
               tickFormatter={(value) =>
                 chartConfig[value as keyof typeof chartConfig]?.label
               }
@@ -111,13 +111,14 @@ export function ChartBarMixed() {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="sales" radius={5} />
+            <Bar dataKey="sales" radius={5} maxBarSize={30}/>
           </BarChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 leading-none font-medium">
           <TrendingUp className="h-4 w-4" />
+          Smartphone na liderança com 420 vendas
         </div>
         <div className="leading-none text-muted-foreground"></div>
       </CardFooter>
